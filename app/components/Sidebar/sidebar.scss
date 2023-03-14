@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+
+.nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  background: #fff;
+  width: 65px;
+  overflow: hidden;
+  transition: width 0.2s linear;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+.logo {
+  text-align: center;
+  display: flex;
+  transition: all 0.5s ease;
+  margin: 0;
+}
+.logo span {
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+a {
+  position: relative;
+  color: rgb(85, 83, 83);
+  font-size: 20px;
+  font-weight: 700;
+  display: table;
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.nav-item {
+  position: relative;
+  top: -5px;
+  margin-bottom: 30px;
+}
+a:hover {
+  background: #eee;
+}
+nav:hover{
+  width: 220px;
+  transition: all 0.5s ease;
+}
+.logout {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 20px;
+}

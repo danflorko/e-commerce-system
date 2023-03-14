@@ -1,0 +1,63 @@
+@import '../../styles/utils/_vars';
+
+.pagination {
+  margin-bottom: 64px;
+  list-style: none;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  justify-content: center;
+
+  &__button {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid $icons;
+    border-radius: 48px;
+
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: $primary;
+    }
+
+    &--prev {
+      margin-right: 16px;
+    }
+
+    &--page-number {
+      margin-right: 8px;
+      color: $primary;
+
+      font-family: 'Mont';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &--next {
+      margin-left: 8px;
+    }
+
+    &--prev,
+    &--next {
+      transition: background-color 0.3s;
+    }
+
+    &--selected {
+      background-color: $primary;
+      color: white;
+    }
+
+    &--disabled {
+      border: 1px solid $elements;
+      fill: #b4bdc4;
+
+      cursor: not-allowed;
+    }
+  }
+}

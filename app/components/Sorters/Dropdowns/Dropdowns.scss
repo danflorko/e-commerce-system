@@ -1,0 +1,93 @@
+@import '../../../styles/utils/_vars';
+
+.dropdown {
+  &__title {
+    display: block;
+    margin-bottom: 4px;
+
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+
+    color: $secondary;
+  }
+
+  &__field {
+    width: 200px;
+    height: 40px;
+
+    padding: 0 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: $primary;
+
+    border: 1px solid $icons;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background-color: white;
+
+    transition: border-color 0.3s color 0.3s;
+
+    &--name {
+      color: $secondary;
+    }
+
+    &--default-name {
+      color: $primary;
+    }
+
+    &:hover {
+      border-color: $secondary;
+    }
+
+    &--option {
+      width: 200px;
+      height: 32px;
+
+      border-radius: 0;
+      border: transparent;
+
+      transition: color 0.3s;
+
+      &:hover {
+        color: $secondary;
+      }
+    }
+  }
+
+  &__field--focused:focus &__field--name {
+    color: $primary;
+  }
+
+  &__field--focused:focus &__button {
+    rotate: 180deg;
+  }
+
+  &__field:hover &__field--name {
+    color: $primary;
+    font-weight: 600;
+  }
+
+  &__options {
+    position: absolute;
+    padding: 8px 0;
+    background-color: white;
+
+    border: 1px solid $elements;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+
+    &--hidden {
+      visibility: hidden;
+    }
+  }
+}
