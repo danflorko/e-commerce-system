@@ -11,11 +11,13 @@ coverage
 # next.js
 .next
 out
+db.json
 
 # production
 build
 
 .vscode
+.idea
 
 package-lock.json
 yarn.lock
