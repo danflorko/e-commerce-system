@@ -49,12 +49,11 @@ const Sidebar: FC<SidebarProps> = () => {
       <ul>
         <li>
           <Link href="/" className="logo">
-            {/* <img src="" alt="" /> */}
             <span className="nav-item">Shop</span>
           </Link>
         </li>
-        {routes.map(route => (
-          <li>
+        {routes.map((route, idx) => (
+          <li key={`route-${idx}`}>
             <Link href={route.path}>
               <FontAwesomeIcon
                 icon={route.icon}

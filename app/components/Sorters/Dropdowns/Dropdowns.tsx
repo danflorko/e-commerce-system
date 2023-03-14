@@ -6,7 +6,6 @@ interface Props {
   title: string;
   field: string | number;
   options: string[] | number[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSelect: (item: any) => void;
 }
 
@@ -41,7 +40,6 @@ export const Dropdown: React.FC<Props> = ({
           <path
             fillRule="evenodd"
             clipRule="evenodd"
-            // eslint-disable-next-line max-len
             d="M9.47173 0.528636C9.73208 0.788986 9.73208 1.2111 9.47173 1.47145L5.47173 5.47144C5.21138 5.73179 4.78927 5.73179 4.52892 5.47144L0.528921 1.47144C0.268571 1.2111 0.268571 0.788985 0.528921 0.528636C0.78927 0.268286 1.21138 0.268286 1.47173 0.528636L5.00033 4.05723L8.52892 0.528636C8.78927 0.268287 9.21138 0.268287 9.47173 0.528636Z"
             fill="#B4BDC4"
           />
