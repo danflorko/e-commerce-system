@@ -1,9 +1,10 @@
 const fs = require('fs')
 const { faker } = require('@faker-js/faker');
 
-const getData = (count) => {
+const getData = (count) => Array.from(new Array(count)).map((_, idx) => {
     const price = faker.commerce.price()
-    return Array.from(new Array(count)).map((_, idx) => ({
+
+    return {
         id: idx,
         itemId: `${idx}-product-${faker.commerce.product()}`,
         name: faker.commerce.productName(),
@@ -15,10 +16,10 @@ const getData = (count) => {
         ram: `${faker.datatype.number({ min: 2, max: 16, precision: 1 })} GB`,
         year: faker.date.past(5).getFullYear(),
         image: faker.image.transport(1080, 1440, true)
-    }))
-};
+    }
+})
 
 fs.writeFileSync(
     "./db.json",
-    JSON.stringify({ products: getData(200) })
+    JSON.stringify({ products: getData(250) })
 );
