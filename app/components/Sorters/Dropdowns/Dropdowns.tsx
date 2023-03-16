@@ -51,10 +51,10 @@ export const Dropdown: React.FC<Props> = ({
           'dropdown__options--hidden': !isFocusing,
         })}
       >
-        {options.map((option) => (
+        {options.map((option, idx) => (
           <button
             type="button"
-            key={option}
+            key={`${idx}-${option}`}
             className="dropdown__field dropdown__field--option"
             onClick={() => {
               onSelect(option);

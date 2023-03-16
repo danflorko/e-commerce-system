@@ -1,14 +1,16 @@
-import { product } from '@/app/types';
+import ProductsContainer from '../ProductsContainer/ProductsContainer';
+import type { FC } from 'react';
+import type { product } from '@/app/types';
 
 import './products.scss';
 import '../../styles/utils/grid.scss';
-import { productsService } from './productsService';
-import ProductsContainer from '../ProductsContainer/ProductsContainer';
 
-export default async function Products() {
-  const products: product[] = await productsService.getproducts();
+interface ProductsPageProps {
+  products: product[];
+}
 
-  return (
-    <ProductsContainer products={products}/>
-  );
-};
+const ProductsPage: FC<ProductsPageProps> = ({ products }) => (
+  <ProductsContainer products={products} />
+);
+
+export default ProductsPage

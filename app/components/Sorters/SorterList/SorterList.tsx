@@ -1,24 +1,28 @@
 'use client';
 
+import { useContext } from 'react';
+import type { FC } from 'react';
+
 import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
-import { FC, useContext } from 'react';
 import { Dropdown } from '../Dropdowns';
+import type { product } from '@/app/types';
 
 import './SorterList.scss';
 
 interface SorterListProps {
-
+  products: product[];
 }
 
-const SorterList: FC<SorterListProps> = () => {
+const SorterList: FC<SorterListProps> = ({ products }) => {
   const { sortType, setSortType, color, setColor } = useContext(ProductsContext);
+
   const sorters = [
     {
       sorterId: 1,
       sorterName: 'Sort by price',
       sortOptions: [
-        'None', 'Cheapest', 'Expensive',
+        SortType.Cheapest, SortType.Expensive,
       ],
       sortField: sortType,
       handleSortBy: (value: SortType) => {
@@ -28,21 +32,7 @@ const SorterList: FC<SorterListProps> = () => {
     {
       sorterId: 2,
       sorterName: 'Color ',
-      sortOptions: [
-        'None',
-        'black',
-        'silver',
-        'gold',
-        'yellow',
-        'green',
-        'midnightgreen',
-        'spacegray',
-        'red',
-        'white',
-        'purple',
-        'coral',
-        'rosegold'
-      ],
+      sortOptions: ['All', ...products.map(product => product.color)],
       sortField: color,
       handleSortBy: (value: SortType) => {
         setColor(value);
@@ -56,7 +46,7 @@ const SorterList: FC<SorterListProps> = () => {
     <div className="sorter-list">
       {sorters.map(sorter => (
         <Dropdown
-          key={sorter.sorterId}
+          key={`filter-${sorter.sorterId}`}
           title={sorter.sorterName}
           field={sorter.sortField}
           options={sorter.sortOptions}

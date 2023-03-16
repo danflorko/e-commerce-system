@@ -1,6 +1,8 @@
-import { product } from '@/app/types';
 import Image from 'next/image';
-import { FC } from 'react';
+import type { FC } from 'react'
+
+import type { product } from '@/app/types';
+
 import './ProductItem.scss';
 
 interface ProductItemProps {
@@ -20,8 +22,14 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
 
   return (
     <div className="card">
-      <Image src={image} alt={name} width={200} height={200} className="card__image"/>
-
+      <Image
+        src={image}
+        alt={name}
+        width={200}
+        height={200}
+        className="card__image"
+        loading={"lazy"}
+      />
       <h2 className="card__title">{`${name} (iMT9G2FS/A)`}</h2>
 
       <p className="card__price">

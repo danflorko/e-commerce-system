@@ -10,12 +10,11 @@ interface IProducts {
   setColor: (SortType: SortType) => void;
 };
 
-
 export const ProductsContext = React.createContext<IProducts>({
-  sortType: SortType.None,
-  setSortType: () => {},
-  color: 'None',
-  setColor: () => {},
+  sortType: SortType.Cheapest,
+  setSortType: () => { },
+  color: 'All',
+  setColor: () => { },
 });
 
 type Props = {
@@ -23,8 +22,8 @@ type Props = {
 };
 
 export const UserContextProvider: React.FC<Props> = ({ children }) => {
-  const [sortType, setSortType] = useState(SortType.None);
-  const [color, setColor] = useState('None');
+  const [sortType, setSortType] = useState(SortType.Cheapest);
+  const [color, setColor] = useState('All');
 
   const contextValues = {
     sortType,

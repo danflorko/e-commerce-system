@@ -1,10 +1,12 @@
 'use client';
+import React from 'react';
+import { useState, useContext, startTransition, useEffect, useCallback } from 'react';
+import type { FC } from 'react';
+
+import ProductItem from '../ProductItem/ProductItem';
 import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
-import { FC, useState, useContext, useTransition, useEffect } from 'react';
-import React from 'react';
 import { product } from '@/app/types';
-import ProductItem from '../ProductItem/ProductItem';
 import { Pagination } from '../Pagination';
 
 interface ProductsContainerProps {
@@ -16,57 +18,52 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
   const [renderingproducts, setRenderingproducts] = useState<product[]>(products);
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
-  const [isPending, startTransition] = useTransition();
 
-  const includesQuery = (text: string) => text.toLowerCase()
-    .includes(query?.toLowerCase());
+  const includesQuery = useCallback((text: string) => text.toLowerCase().includes(query?.toLowerCase()), [query]);
 
-  const curPage = currentPage === 1 ? 0 : 16 * (currentPage - 1)
-
-  const handleChange = (event: { target: { value: any; }; }) => {
+  const handleChange = useCallback((event: { target: { value: any; }; }) => {
     const { value } = event.target;
+
     startTransition(() => {
-      setQuery(value);
+      setQuery(value || "");
     })
-  };
+  }, []);
 
-  const handleCurPage = (numberOfPage: number) => {
+  const handleCurPage = useCallback((numberOfPage: number) => {
     setCurrentPage(numberOfPage);
-  };
+  }, []);
 
-  const handlePrevPage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage((page) => page - 1);
-    }
-  };
+  const handlePrevPage = useCallback(() => {
+    setCurrentPage(page => page === 1 ? page : page - 1)
+  }, []);
 
-  const handleNextPage = (lastPage: number) => {
-    if (currentPage !== lastPage) {
-      setCurrentPage((page) => page + 1);
-    }
-  };
+  const handleNextPage = useCallback((lastPage: number) => {
+    setCurrentPage(page => page === lastPage ? page : page + 1)
+  }, []);
 
   useEffect(() => {
     setRenderingproducts(
-      products?.filter(product => includesQuery(product.name))
+      products => [...products]?.filter(product => includesQuery(product.name))
     );
+  }, [])
 
-    switch (sortType) {
-      case SortType.Cheapest:
-        setRenderingproducts((prev) => [...prev].sort((a, b) => a.price - b.price));
-        break;
-      case SortType.Expensive:
-        setRenderingproducts((prev) => [...prev].sort((a, b) => b.price - a.price));
-        break;
-      default:
-        break;
-    }
-
-
-    if (color !== 'None' && products) {
-      setRenderingproducts((prev) => [...prev].filter(product => product.color === color));
-    }
-  }, [sortType, color, currentPage, query]);
+  useEffect(() => {
+    startTransition(() => {
+      if (products) {
+        setRenderingproducts(
+          products.filter(product => color === 'All' ? products : product.color === color)
+        );
+      }
+      switch (sortType) {
+        case SortType.Cheapest:
+          setRenderingproducts((prev) => [...prev.sort((a, b) => Number(a.price) - Number(b.price))]);
+          break;
+        case SortType.Expensive:
+          setRenderingproducts((prev) => [...prev.sort((a, b) => Number(b.price) - Number(a.price))]);
+          break;
+      }
+    })
+  }, [sortType, color, currentPage, query, products]);
 
   return (
     <>
@@ -83,7 +80,7 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
             <li key={product.id} className="product__item">
               <ProductItem product={product} />
             </li>
-          )).slice(curPage, 16 * currentPage)}
+          )).slice(currentPage === 1 ? 0 : 16 * (currentPage - 1), 16 * currentPage)}
         </ul>
         <Pagination
           total={renderingproducts.length}
