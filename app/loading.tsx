@@ -1,36 +1,78 @@
+'use client';
+import { FC, Fragment, useEffect, useState } from 'react';
 import ContentLoader from 'react-content-loader';
 
-const Loading = () => (
-    <ContentLoader
-        viewBox="0 0 1360 900"
-        height={900}
-        width={1360}
-    >
-        <rect x="470" y="20" rx="8" ry="8" width="200" height="200" />
-        <rect x="470" y="250" rx="0" ry="0" width="200" height="18" />
-        <rect x="470" y="275" rx="0" ry="0" width="120" height="20" />
-        <rect x="690" y="20" rx="8" ry="8" width="200" height="200" />
-        <rect x="690" y="250" rx="0" ry="0" width="200" height="18" />
-        <rect x="690" y="275" rx="0" ry="0" width="120" height="20" />
-        <rect x="910" y="20" rx="8" ry="8" width="200" height="200" />
-        <rect x="910" y="250" rx="0" ry="0" width="200" height="18" />
-        <rect x="910" y="275" rx="0" ry="0" width="120" height="20" />
-        <rect x="1130" y="20" rx="8" ry="8" width="200" height="200" />
-        <rect x="1130" y="250" rx="0" ry="0" width="200" height="18" />
-        <rect x="1130" y="275" rx="0" ry="0" width="120" height="20" />
-        <rect x="470" y="340" rx="8" ry="8" width="200" height="200" />
-        <rect x="470" y="570" rx="0" ry="0" width="200" height="18" />
-        <rect x="470" y="595" rx="0" ry="0" width="120" height="20" />
-        <rect x="690" y="340" rx="8" ry="8" width="200" height="200" />
-        <rect x="690" y="570" rx="0" ry="0" width="200" height="18" />
-        <rect x="690" y="595" rx="0" ry="0" width="120" height="20" />
-        <rect x="910" y="340" rx="8" ry="8" width="200" height="200" />
-        <rect x="910" y="570" rx="0" ry="0" width="200" height="18" />
-        <rect x="910" y="595" rx="0" ry="0" width="120" height="20" />
-        <rect x="1130" y="340" rx="8" ry="8" width="200" height="200" />
-        <rect x="1130" y="570" rx="0" ry="0" width="200" height="18" />
-        <rect x="1130" y="595" rx="0" ry="0" width="120" height="20" />
-    </ContentLoader>
-)
+const Loading: FC = () => {
+    const [rectsPerRow, setRectsPerRow] = useState(4);
 
-export default Loading
+    useEffect(() => {
+        const handleResize = () => {
+            switch (true) {
+                case window.innerWidth >= 1700:
+                    setRectsPerRow(4);
+                    break
+                case window.innerWidth >= 1380:
+                    setRectsPerRow(3);
+                    break
+                case window.innerWidth >= 1140:
+                    setRectsPerRow(2);
+                    break
+                default:
+                    setRectsPerRow(1);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const rectWidth = 228;
+    const rectHeight = rectWidth;
+
+    return (
+        <ContentLoader viewBox={`-270 -125 ${window.innerWidth} 900`} height={900} width={window.innerWidth}>
+            {[...Array(3)].map((_, rowIdx) => (
+                <Fragment key={rowIdx}>
+                    {[...Array(rectsPerRow)].map((_, colIdx) => {
+                        const xPosition = colIdx * rectWidth + (colIdx + 1) * 16
+                        const yPosition = rowIdx * rectHeight + (rowIdx + 1) * 100
+
+                        return (
+                            <Fragment key={colIdx}>
+                                <rect
+                                    x={xPosition}
+                                    y={yPosition}
+                                    rx="8"
+                                    ry="8"
+                                    width={rectWidth}
+                                    height={rectHeight}
+                                />
+                                <rect
+                                    x={xPosition}
+                                    y={yPosition + rectHeight + 15}
+                                    rx="0"
+                                    ry="0"
+                                    width={rectWidth - 80}
+                                    height="18"
+                                />
+                                <rect
+                                    x={xPosition}
+                                    y={yPosition + rectHeight + 43}
+                                    rx="0"
+                                    ry="0"
+                                    width={rectWidth - 30}
+                                    height="20"
+                                />
+                            </Fragment>
+                        )
+                    })}
+                </Fragment>
+            ))}
+        </ContentLoader>
+    );
+};
+
+export default Loading;

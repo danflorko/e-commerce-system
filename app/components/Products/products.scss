@@ -1,4 +1,6 @@
-.product{
+@import '../../styles/utils/mixins.scss';
+
+.product {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,8 +22,11 @@
   }
 
   &__list {
-    padding-left: 40px;
-    padding-right: 40px;
+    @include onDesktop() {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
     list-style-type: none;
   }
 
