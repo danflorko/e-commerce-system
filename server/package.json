@@ -14,8 +14,9 @@
   },
   "scripts": {
     "gen": "node generate.js",
-    "server": "json-server --watch db.json --port=8080 --host 0.0.0.0 --delay=1000",
-    "start": "node generate.js && json-server --watch db.json --port=8080 --host 0.0.0.0 --delay=1000"
+    "server": "json-server --watch db.json --port=8080 --delay=1000",
+    "server:docker": "json-server --watch db.json --port=8080 --delay=1000 --host=0.0.0.0",
+    "start": "node generate.js && json-server --watch db.json --port=8080 --delay=1000"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

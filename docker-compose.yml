@@ -1,35 +1,26 @@
 version: '3.1'
 
-volumes:
-  application:
-    name: application
-
 services:
   api:
-    working_dir: /node
     user: node
-    volumes:
-      - application:/node
+    working_dir: /server
     hostname: ecommerce
     ports:
       - 8080:8080
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
-    command: json-server --watch db.json --port=${REACT_APP_HOST_PORT:-8080} --host=0.0.0.0 --delay=1000
   nextjs:
-    working_dir: /node
+    user: node
+    working_dir: /client
     ports:
       - 3000:3000
     depends_on:
       - api
-    user: node
-    volumes:
-      - application:/node
     environment:
       - REACT_APP_HOSTNAME=${REACT_APP_HOSTNAME:-ecommerce}
       - REACT_APP_HOST_PORT=${REACT_APP_HOST_PORT:-8080}
     build:
-      context: .
+      context: ./client
+      dockerfile: Dockerfile
     stdin_open: true
-    command: npm run dev
