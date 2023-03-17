@@ -51,7 +51,7 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
     startTransition(() => {
       if (products) {
         setRenderingproducts(
-          products.filter(product => color === 'All' ? products : product.color === color)
+          products.filter(product => includesQuery(product.name) && color === 'All' ? products : product.color === color)
         );
       }
       switch (sortType) {

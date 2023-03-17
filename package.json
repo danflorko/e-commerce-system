@@ -10,7 +10,7 @@
   },
   "private": true,
   "engines": {
-    "node": "^18.14.0"
+    "node": "^19.7"
   },
   "scripts": {
     "server": "node generate.js && json-server --watch db.json --port=8080 --delay=1000",

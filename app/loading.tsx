@@ -30,11 +30,19 @@ const Loading: FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const rectWidth = 228;
+    const rectWidth = 278;
     const rectHeight = rectWidth;
 
     return (
-        <ContentLoader viewBox={`-270 -125 ${window.innerWidth} 900`} height={900} width={window.innerWidth}>
+        <ContentLoader viewBox={`-100 -50 ${window.innerWidth} 900`} height={900} width={window.innerWidth}>
+            <rect
+                x={130}
+                y={10}
+                rx="8"
+                ry="8"
+                width={935}
+                height={48}
+            />
             {[...Array(3)].map((_, rowIdx) => (
                 <Fragment key={rowIdx}>
                     {[...Array(rectsPerRow)].map((_, colIdx) => {
