@@ -1,7 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-First, after installing node_modules you need to start mock.server:
+- Standart development way:
+First, after installing node_modules (`npm i`) you need to start mock.server:
 ```bash
 npm run server
 # or
@@ -18,6 +19,40 @@ npm run dev
 yarn dev
 # or
 pnpm dev
+```
+
+- Docker development way:
+```bash
+docker compose up
+```
+
+- Production way:
+First, after installing node_modules (`npm i`) you need to start mock.server:
+```bash
+npm run server
+# or
+yarn server
+# or
+pnpm server
+```
+
+Second, launch an application build:
+
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
+
+Third, run the application.
+```bash
+npm start
+# or
+yarn start
+# or
+pnpm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
