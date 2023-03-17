@@ -1,6 +1,7 @@
 'use client';
-import { FC, Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import ContentLoader from 'react-content-loader';
+import type { FC } from 'react'
 
 const Loading: FC = () => {
     const [rectsPerRow, setRectsPerRow] = useState(4);

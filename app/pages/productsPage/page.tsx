@@ -4,7 +4,7 @@ import Loading from '../../loading';
 import Products from '../../components/Products/products';
 import SorterList from '../../components/Sorters/SorterList/SorterList';
 import { UserContextProvider } from '../../utils/context/context';
-import { productsService } from '@/app/components/Products/productsService';
+import { productsService } from '@/app/api/productsService';
 import type { product } from '@/app/types';
 
 import './productPage.scss';

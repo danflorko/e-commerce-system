@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './Dropdowns.scss';
 import classNames from 'classnames';
 
@@ -17,6 +17,8 @@ export const Dropdown: React.FC<Props> = ({
 }) => {
   const [isFocusing, setIsFocusing] = useState(false);
 
+  const handleFocus = useCallback(() => setIsFocusing((prev) => !prev), [])
+
   return (
     <div className="dropdown">
       <span className="dropdown__title">{title}</span>
@@ -26,7 +28,7 @@ export const Dropdown: React.FC<Props> = ({
         className={classNames('dropdown__field', {
           'dropdown__field--focused': isFocusing,
         })}
-        onClick={() => setIsFocusing((boolean) => !boolean)}
+        onClick={handleFocus}
       >
         <span className="dropdown__field--default-name">{field}</span>
         <svg
