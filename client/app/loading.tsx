@@ -7,9 +7,9 @@ const Loading: FC = () => {
     return (
         <ContentLoader
             className={"loader-container"}
-            viewBox="0 0 1700 100%"
-            height="1300"
-            width="100%"
+            viewBox="0 0 1700 1700"
+            height="1700"
+            width="1700"
         >
             <rect className={"search-block"} y="10" rx="8" ry="8" />
 
