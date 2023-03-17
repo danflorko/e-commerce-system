@@ -11,6 +11,7 @@ import './productPage.scss';
 
 export default async function ProductsPage() {
   const products: product[] = await productsService.getproducts();
+
   return (
     <UserContextProvider>
       <div className="product-page">

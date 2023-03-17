@@ -5,13 +5,13 @@
 }
 
 @mixin onSmallDesktop {
-  @media (min-width: 1380px) {
+  @media (min-width: 1380px) and (max-width: 1699px) {
     @content;
   }
 }
 
 @mixin onTablet {
-  @media (min-width: 1140px) {
+  @media (min-width: 1140px) and (max-width: 1379px) {
     @content;
   }
 }
@@ -20,4 +20,40 @@
   @media (max-width: 1140px) {
     @content;
   }
+}
+
+$medias: onproduct, onTablet, onSmallDesktop, onDesktop;
+
+@mixin apply-responsive-styles($breakpoint) {
+  @if $breakpoint =="onproduct" {
+    @include onproduct() {
+      @content
+    }
+  }
+
+  ;
+
+  @if $breakpoint =="onTablet" {
+    @include onTablet() {
+      @content
+    }
+  }
+
+  ;
+
+  @if $breakpoint =="onSmallDesktop" {
+    @include onSmallDesktop() {
+      @content
+    }
+  }
+
+  ;
+
+  @if $breakpoint =="onDesktop" {
+    @include onDesktop() {
+      @content
+    }
+  }
+
+  ;
 }

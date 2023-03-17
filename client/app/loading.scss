@@ -1,0 +1,102 @@
+@import './styles/utils/mixins.scss';
+
+$margin: 16px;
+$blocks-in-row: 4;
+$block-width-default: calc((90vw - 100px));
+$block-grid-width: calc(100vw / 24);
+
+.loader-container {
+    margin-left: 116px;
+    margin-top: calc(216px + 1.8rem + 2em);
+
+    @include onproduct() {
+        margin-left: calc(#{$block-grid-width} * 6);
+        margin-top: calc(230px + (1.8rem + 2em)*2 + 40px);
+    }
+
+    @include onDesktop() {
+        margin-left: 90px;
+        margin-top: calc(15px + 2em)
+    }
+
+    rect {
+        display: block;
+
+        &.search-block {
+            height: 3em;
+            width: calc(#{$block-width-default} * 0.75);
+            min-width: 375px;
+            x: calc(#{$block-grid-width} * 2.8);
+        }
+
+        @include onproduct() {
+            &.search-block {
+                width: calc((90vw - #{$block-grid-width} * 6) * 0.75 - 5vw);
+                x: calc(#{$block-grid-width} * 1.5);
+            }
+        }
+
+        @include onTablet() {
+            &.search-block {
+                width: calc(#{$block-width-default} * 0.75);
+                x: calc(#{$block-grid-width} * 2.45);
+            }
+        }
+
+        @include onDesktop() {
+            &.search-block {
+                width: calc((90vw - 50px) * 0.75);
+                x: calc(#{$block-grid-width} * 2.1);
+            }
+        }
+
+        &.block {
+
+            &.main-block:nth-child(n),
+            &.head-block:nth-child(n),
+            &.secondary-block:nth-child(n) {
+                x: 0px;
+            }
+
+            @for $m from 1 through length($medias) {
+                @include apply-responsive-styles(nth($medias, $m)) {
+                    $is-first: if($m ==1, 0, 1);
+                    $block-width: calc(#{$block-width-default} / (#{$m + if($is-first == 0, 1, 0)}) - #{($is-first)*10}px + #{(if($is-first ==0, 1, 0))*150}px);
+
+                    &.main-block:nth-child(n),
+                    &.head-block:nth-child(n) {
+                        width: #{$block-width};
+                        min-width: 230px;
+                        max-width: 592px;
+                    }
+
+                    &.secondary-block:nth-child(n) {
+                        width: calc(#{$block-width} * 0.66);
+                    }
+
+                    @if $is-first !=1 {
+                        @for $s from ($blocks-in-row + 2) - $m through 3 {
+
+                            &.main-block:nth-child(4n + #{$s}),
+                            &.head-block:nth-child(4n + #{$s}),
+                            &.secondary-block:nth-child(4n + #{$s}) {
+                                display: none
+                            }
+                        }
+                    }
+
+                    @if $is-first ==1 {
+                        @for $i from 1 through $m - 1 {
+
+                            &.main-block:nth-child(4n + #{$i}),
+                            &.head-block:nth-child(4n + #{$i}),
+                            &.secondary-block:nth-child(4n + #{$i}) {
+                                x: calc((#{$block-width} + #{$margin}) * #{$i})
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
