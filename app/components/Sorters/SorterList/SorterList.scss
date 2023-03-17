@@ -1,5 +1,16 @@
+@import '../../../styles/utils/mixins.scss';
+
 .sorter-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 40px;
+
+  @include onDesktop() {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  @include onproduct() {
+    flex-direction: column;
+  }
 }

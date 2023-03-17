@@ -1,15 +1,33 @@
+@import '../../styles/utils/mixins.scss';
+
 .product-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: 40px;
-  
+
+  @include onDesktop() {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 2em;
+  }
+
+  @include onproduct() {
+    margin-left: 60px;
+  }
 
   &__products-list {
-    
+    display: flex;
+    justify-content: flex-end;
+    flex: auto;
   }
+
   &__sorters-list {
     padding-top: 50px;
-    margin-right: 50px;
     margin-top: 100px;
+
+    @include onDesktop() {
+      margin-right: 50px;
+    }
   }
 }
