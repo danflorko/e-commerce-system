@@ -21,4 +21,4 @@ EXPOSE 8080
 
 RUN npm run gen
 
-ENTRYPOINT npm run server:docker
+ENTRYPOINT ["npm", "run", "server:docker"]

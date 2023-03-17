@@ -1,27 +1,16 @@
 'use client';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import ContentLoader from 'react-content-loader';
 import type { FC } from 'react'
 
 const Loading: FC = () => {
-    const [rectsPerRow, setRectsPerRow] = useState(4);
+    const [width, setWidth] = useState<number>(1300);
+    const [rectsPerRow, setRectsPerRow] = useState<number>(4);
 
     useEffect(() => {
         const handleResize = () => {
-            switch (true) {
-                case window.innerWidth >= 1700:
-                    setRectsPerRow(4);
-                    break
-                case window.innerWidth >= 1380:
-                    setRectsPerRow(3);
-                    break
-                case window.innerWidth >= 1140:
-                    setRectsPerRow(2);
-                    break
-                default:
-                    setRectsPerRow(1);
-            }
-        };
+            setWidth(window.innerWidth)
+        }
 
         handleResize();
 
@@ -30,11 +19,29 @@ const Loading: FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        const getColumnsCount = () => {
+            switch (true) {
+                case width >= 1700:
+                    setRectsPerRow(4)
+                    break
+                case width >= 1380:
+                    setRectsPerRow(3)
+                    break
+                case width >= 1140:
+                    setRectsPerRow(2)
+                    break
+                default:
+                    setRectsPerRow(1)
+            }
+        }
+    }, [width])
+
     const rectWidth = 278;
     const rectHeight = rectWidth;
 
     return (
-        <ContentLoader viewBox={`-100 -50 ${window.innerWidth} 900`} height={900} width={window.innerWidth}>
+        <ContentLoader viewBox={`-100 -50 ${width} 900`} height={900} width={width}>
             <rect
                 x={130}
                 y={10}

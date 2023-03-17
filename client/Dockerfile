@@ -4,7 +4,6 @@ ARG REACT_APP_HOST_PORT
 
 RUN apk add --no-cache libc6-compat
 RUN npm i -g npm
-RUN npm i -g fs
 
 WORKDIR /client
 RUN chown -R node:node /client
@@ -24,4 +23,4 @@ ENV REACT_APP_HOSTNAME=$(hostname)
 
 EXPOSE 3000
 
-ENTRYPOINT npm run dev
+ENTRYPOINT npm run build && npm run start
