@@ -1,8 +1,11 @@
 import Sidebar from './components/Sidebar/sidebar';
 import { config } from "@fortawesome/fontawesome-svg-core";
+import React from 'react';
 
 import './globals.css'
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Provider } from 'react-redux';
+import { wrapper } from './shared/store';
 
 config.autoAddCss = false;
 
@@ -19,15 +22,18 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children
+  children, ...rest
 }: {
   children: React.ReactNode
 }) {
+  const { store } = wrapper.useWrappedStore(rest)
   return (
     <html lang="en">
       <body>
-        <Sidebar />
-        {children}
+        <Provider store={store}>
+          <Sidebar />
+          {children}
+        </Provider>
       </body>
     </html>
   )

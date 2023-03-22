@@ -6,16 +6,16 @@ import type { FC } from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
-import { product } from '@/app/types';
+import { IProduct } from '@/app/types';
 import { Pagination } from '../Pagination';
 
 interface ProductsContainerProps {
-  products: product[];
+  products: IProduct[];
 }
 
 const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
   const { sortType, color } = useContext(ProductsContext);
-  const [renderingproducts, setRenderingproducts] = useState<product[]>(products);
+  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>(products);
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
 

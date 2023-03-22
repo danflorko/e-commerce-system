@@ -6,12 +6,12 @@ import type { FC } from 'react';
 import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
 import { Dropdown } from '../Dropdowns';
-import type { product } from '@/app/types';
+import type { IProduct } from '@/app/types';
 
 import './SorterList.scss';
 
 interface SorterListProps {
-  products: product[];
+  products: IProduct[];
 }
 
 const SorterList: FC<SorterListProps> = ({ products }) => {

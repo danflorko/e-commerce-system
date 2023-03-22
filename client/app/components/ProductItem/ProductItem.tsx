@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import type { FC } from 'react'
+import type { FC } from 'react';
 
-import type { product } from '@/app/types';
+import type { IProduct } from '@/app/types';
 
 import './ProductItem.scss';
 
 interface ProductItemProps {
-  product: product;
+  product: IProduct;
 }
 
 const ProductItem: FC<ProductItemProps> = ({ product }) => {
@@ -19,6 +19,12 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
     capacity,
     ram,
   } = product;
+
+  const handleShop = () => {
+    
+  };
+
+  const isSelected = false;
 
   return (
     <div className="card">
@@ -54,6 +60,16 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
           <span className="card__feature-name">RAM</span>
           <span className="card__feature-name--value">{ram}</span>
         </p>
+      </div>
+
+      <div className="card__buttons">
+        <button
+          type="button"
+          className={isSelected ? 'card__button-added' : 'card__button-add'}
+          onClick={handleShop}
+        >
+          {isSelected ? 'Added' : 'Add to cart'}
+        </button>
       </div>
     </div>
   );;
