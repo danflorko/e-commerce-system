@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+@import '../../styles/utils/vars.scss';
 
 .nav {
   position: fixed;
@@ -61,4 +62,25 @@ nav:hover {
   position: absolute;
   bottom: 0;
   margin-bottom: 20px;
+}
+
+.cart-count {
+  position: absolute;
+  z-index: 1;
+  left: 13%;
+  right: 20%;
+  bottom: 59%;
+  width: 18px;
+  height: 18px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  color: $white;
+  background-color: $accent;
+  border: 2px solid $white;
+  border-radius: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
