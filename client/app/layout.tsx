@@ -4,8 +4,7 @@ import React from 'react';
 
 import './globals.css'
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { Provider } from 'react-redux';
-import { wrapper } from './shared/store';
+import { Providers } from './provider';
 
 config.autoAddCss = false;
 
@@ -22,18 +21,17 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children, ...rest
+  children
 }: {
   children: React.ReactNode
 }) {
-  const { store } = wrapper.useWrappedStore(rest)
   return (
     <html lang="en">
       <body>
-        <Provider store={store}>
+        <Providers>
           <Sidebar />
           {children}
-        </Provider>
+        </Providers>
       </body>
     </html>
   )
