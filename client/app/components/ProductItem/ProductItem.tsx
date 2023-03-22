@@ -1,9 +1,16 @@
+'use client';
+
 import Image from 'next/image';
 import type { FC } from 'react';
 
 import type { IProduct } from '@/app/types';
 
 import './ProductItem.scss';
+import AddToCartButton from '../AddToCartButton/AddToCartButton';
+import { useDrag } from 'react-dnd/dist/hooks';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/app/shared/store';
+import { addToCart, incrementQuantity } from '@/app/reducers/cart';
 
 interface ProductItemProps {
   product: IProduct;
@@ -11,6 +18,7 @@ interface ProductItemProps {
 
 const ProductItem: FC<ProductItemProps> = ({ product }) => {
   const {
+    id,
     image,
     name,
     price,
@@ -20,14 +28,32 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
     ram,
   } = product;
 
-  const handleShop = () => {
-    
-  };
+  const dispatch = useDispatch();
+  const { cart } = useAppSelector((state) => state.cart)
 
-  const isSelected = false;
+  const [{}, drag ] = useDrag(() => ({
+    type: 'product',
+    item: { id },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        if (cart.find(product => product.id === id)) {
+          dispatch(incrementQuantity(id))
+        } else {
+          dispatch(addToCart({
+            id, name, image, price
+          }))
+        }
+      }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
+    }),
+  }))
 
   return (
-    <div className="card">
+    <div ref={drag} className="card">
       <Image
         src={image}
         alt={name}
@@ -63,13 +89,12 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
       </div>
 
       <div className="card__buttons">
-        <button
-          type="button"
-          className={isSelected ? 'card__button-added' : 'card__button-add'}
-          onClick={handleShop}
-        >
-          {isSelected ? 'Added' : 'Add to cart'}
-        </button>
+        <AddToCartButton
+          id={id}
+          image={image}
+          name={name}
+          price={price}
+        />
       </div>
     </div>
   );;
