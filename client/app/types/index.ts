@@ -14,6 +14,7 @@ export interface IProduct {
   ram: string;
   year: number;
   image: string;
+  quantity: number;
 }
 
 export interface ProductsState {
