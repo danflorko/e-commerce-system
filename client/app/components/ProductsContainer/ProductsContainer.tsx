@@ -9,6 +9,9 @@ import { ProductsContext } from '@/app/utils/context/context';
 import { IProduct } from '@/app/types';
 import { Pagination } from '../Pagination';
 
+import './products.scss';
+import '../../styles/utils/grid.scss';
+
 interface ProductsContainerProps {
   products: IProduct[];
 }
@@ -94,6 +97,6 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
     </>
 
   );
-}
+};
 
 export default ProductsContainer;
