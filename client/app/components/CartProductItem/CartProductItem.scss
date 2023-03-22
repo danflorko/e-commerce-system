@@ -7,11 +7,44 @@
   justify-content: space-between;
   padding: 16px;
   background-color: #ffffff;
-  border: 1px solid #e2e6e9;
   border-radius: 16px;
   position: relative;
   align-items: center;
   width: 350px;
+  transition: 0.3s ease;
+
+  &:hover {
+    transition: 0.3s ease;
+    box-shadow: 0px 6px 10px $icons;
+  }
+
+  .btn-reset {
+    width: auto;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+    outline: 0;
+    color: inherit;
+
+    font-family: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  ;
 
   &__info {
     display: flex;
@@ -22,8 +55,22 @@
   }
 
   &__cross {
-    width: 16px;
-    height: 16px;
+    display: flex;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 140%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: $red;
+    padding: 2px 12px 6px 4px;
+    border-radius: 16px 0 37px 0;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+
+    svg {
+      fill: white;
+    }
   }
 
   &__image-container {
@@ -98,7 +145,7 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    background-color: red;
+    background-color: $accent;
     padding: 7px 9px 2px 15px;
     border-radius: 37px 0 16px 0;
     color: white;
@@ -128,31 +175,21 @@
   }
 }
 
-.btn-reset {
-  width: auto;
+@include onproduct() {
+  .product-item {
+    width: 80%;
 
-  margin: 0;
-  padding: 0;
+    &__bottom-container {
+      justify-content: space-around;
+    }
 
-  border: 0;
-  background: transparent;
-  outline: 0;
-  color: inherit;
+    &__info {
+      margin-bottom: 0;
+    }
 
-  font-family: inherit;
-  font: inherit;
-  cursor: pointer;
-
-  -webkit-font-smoothing: inherit;
-  -moz-osx-font-smoothing: inherit;
-  -webkit-appearance: none;
-
-  &::-moz-focus-inner {
-    border: 0;
-    padding: 0;
+    &__title {
+      font-size: 27px;
+      line-height: normal;
+    }
   }
-
-  transition: box-shadow 0.3s ease;
 }
-
-;

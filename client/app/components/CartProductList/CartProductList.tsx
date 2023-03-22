@@ -1,7 +1,7 @@
 'use client';
-
 import { useAppSelector } from '@/app/shared/store';
 import { CartProductItem } from '../CartProductItem';
+
 import './CartProductList.scss';
 
 export const CartProductList: React.FC = () => {

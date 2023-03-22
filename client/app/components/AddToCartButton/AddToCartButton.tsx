@@ -2,8 +2,9 @@
 
 import { addToCart, removeItem } from '@/app/reducers/cart';
 import { useAppSelector } from '@/app/shared/store';
-import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+
+import type { FC } from 'react';
 
 interface AddToCartButtonProps {
   id: string,

@@ -1,22 +1,16 @@
 'use client'
-
 import { removeAllItems } from '@/app/reducers/cart';
 import { useAppSelector } from '@/app/shared/store';
+
 import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './CartCheckout.scss';
-// import { useNavigate } from 'react-router-dom'
 
-interface CartCheckoutProps {
-
-}
-
-const CartCheckout: FC<CartCheckoutProps> = () => {
-  const { cart } = useAppSelector((state) => state.cart)
+const CartCheckout: FC = () => {
   const dispatch = useDispatch();
+  const { cart } = useAppSelector((state) => state.cart)
   const [isClicked, setIsClicked] = useState(false);
 
-  // const navigete = useNavigate();
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleClick = (event: React.MouseEvent) => {
@@ -27,11 +21,11 @@ const CartCheckout: FC<CartCheckoutProps> = () => {
     if (!isCompleted) {
       dispatch(removeAllItems());
       setIsCompleted(true);
-
-      // setTimeout(() => {
-      //   navigete('/');
-      // }, 2000);
     }
+  };
+
+  const handleClear = () => {
+    dispatch(removeAllItems());
   };
 
   const counterProducts = cart.reduce(
@@ -44,22 +38,31 @@ const CartCheckout: FC<CartCheckoutProps> = () => {
   );
   return (
     <>
-      <div className="cart-page__total-price">{`$${totalPrice}`}</div>
-
-      <div className="cart-page__counter">
-        {`Total for ${counterProducts} products`}
-      </div>
-
       <div className="cart-page__line" />
-
-      <button
-        type="button"
-        className="cart-page__checkout-button"
-        onClick={handleClick}
-        disabled={!counterProducts}
-      >
-        Checkout
-      </button>
+      <div className='cart-page__controls'>
+        <button
+          type="button"
+          className="cart-page__clear-button"
+          onClick={handleClick}
+          disabled={!counterProducts}
+        >
+          Clear All
+        </button>
+        <button
+          type="button"
+          className="cart-page__checkout-button"
+          onClick={handleClear}
+          disabled={!counterProducts}
+        >
+          Checkout
+        </button>
+        <div className="cart-page__totals">
+          <div className="cart-page__counter">
+            {`Total for ${counterProducts} products`}
+          </div>
+          <div className="cart-page__total-price">{`$${totalPrice}`}</div>
+        </div>
+      </div>
     </>
   );
 }

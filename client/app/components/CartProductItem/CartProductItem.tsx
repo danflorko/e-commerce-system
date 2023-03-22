@@ -2,14 +2,15 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
 import { Minus } from '../../icons/Minus';
 import { Plus } from '../../icons/Plus';
 import { Cross } from '@/app/icons/Cross';
-import type { IProduct } from '@/app/types';
-import './CartProductItem.scss';
 import { useAppSelector } from '@/app/shared/store';
-import { useDispatch } from 'react-redux';
 import { decrementQuantity, incrementQuantity, removeItem } from '@/app/reducers/cart';
+import type { IProduct } from '@/app/types';
+
+import './CartProductItem.scss';
 
 type Props = {
   productInfo: IProduct;
@@ -27,10 +28,9 @@ export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
 
   const handlerIncreaseCounter = () => dispatch(incrementQuantity(id));
 
-
   const handlerDicreaseCounter = () => dispatch(decrementQuantity(id));
 
-  const handleClose = () => {
+  const handleRemove = () => {
     dispatch(removeItem(id));
   };
 
@@ -71,13 +71,13 @@ export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
           </div>
           <div>
             <div className="product-item__price">{`$${totalPrice}`}</div>
-            {/* <button
-            type="button"
-            className="product-item__cross btn-reset"
-            onClick={handleClose}
-          >
-            <Cross />
-          </button> */}
+            <button
+              type="button"
+              className="product-item__cross"
+              onClick={handleRemove}
+            >
+              <Cross />
+            </button>
           </div>
         </div>
       </div>
