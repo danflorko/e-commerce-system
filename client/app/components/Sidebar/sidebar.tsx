@@ -40,14 +40,14 @@ const Sidebar: FC<SidebarProps> = () => {
               <FontAwesomeIcon
                 icon={route.icon}
                 style={{
-                  width: 40,
-                  height: 30,
+                  width: 60,
+                  height: 45,
                   top: 3,
                   fontSize: 15,
                   textAlign: 'center',
                   color: "black",
                   position: 'relative',
-                  marginRight: 20
+                  marginRight: 25
                 }}
               />
               <span className="nav-item">{route.name}</span>
@@ -59,14 +59,14 @@ const Sidebar: FC<SidebarProps> = () => {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               style={{
-                width: 40,
-                height: 30,
+                width: 60,
+                height: 45,
                 top: 3,
                 fontSize: 20,
                 textAlign: 'center',
                 color: "black",
                 position: 'relative',
-                marginRight: 20
+                marginRight: 25
               }}
             />
             <span className="nav-item">Log out</span>

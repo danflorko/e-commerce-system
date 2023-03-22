@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Minus } from '../../icons/Minus';
 import { Plus } from '../../icons/Plus';
 import { Cross } from '@/app/icons/Cross';
@@ -25,7 +26,7 @@ export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
   const counter = cart.filter((product) => product.id === id).length;
 
   const handlerIncreaseCounter = () => dispatch(incrementQuantity(id));
-  
+
 
   const handlerDicreaseCounter = () => dispatch(decrementQuantity(id));
 
@@ -37,44 +38,48 @@ export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
 
   return (
     <div className="product-item">
-      <div className="product-item__info">
-        <button
-          type="button"
-          className="product-item__cross btn-reset"
-          onClick={handleClose}
-        >
-          <Cross />
-        </button>
-
-        <div className="product-item__image-container">
-          <img
-            src={image}
-            alt="ProductItemImage"
-            className="product-item__image"
-          />
-        </div>
-        <div className="product-item__title">{`${name} (iMT9G2FS/A)`}</div>
+      <div className="product-item__image-container">
+        <Image
+          src={image}
+          alt={name}
+          width={195}
+          height={195}
+          className="product-item__image"
+          loading={"lazy"}
+        />
       </div>
 
       <div className="product-item__bottom-container">
-        <div className="product-item__counter">
-          <button
+        <div className="product-item__title">{`${name} (iMT9G2FS/A)`}</div>
+        <div className="product-item__info">
+          <div className="product-item__counter">
+            <button
+              type="button"
+              className="product-item__minus btn-reset"
+              onClick={handlerDicreaseCounter}
+            >
+              <Minus />
+            </button>
+            <div className="product-item__amount">{quantity}</div>
+            <button
+              type="button"
+              className="product-item__plus btn-reset"
+              onClick={handlerIncreaseCounter}
+            >
+              <Plus />
+            </button>
+          </div>
+          <div>
+            <div className="product-item__price">{`$${totalPrice}`}</div>
+            {/* <button
             type="button"
-            className="product-item__minus btn-reset"
-            onClick={handlerDicreaseCounter}
+            className="product-item__cross btn-reset"
+            onClick={handleClose}
           >
-            <Minus />
-          </button>
-          <div className="product-item__amount">{quantity}</div>
-          <button
-            type="button"
-            className="product-item__plus btn-reset"
-            onClick={handlerIncreaseCounter}
-          >
-            <Plus />
-          </button>
+            <Cross />
+          </button> */}
+          </div>
         </div>
-        <div className="product-item__price">{`$${totalPrice}`}</div>
       </div>
     </div>
   );
