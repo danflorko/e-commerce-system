@@ -5,12 +5,12 @@ import Products from '../../components/Products/products';
 import SorterList from '../../components/Sorters/SorterList/SorterList';
 import { UserContextProvider } from '../../utils/context/context';
 import { productsService } from '@/app/api/productsService';
-import type { product } from '@/app/types';
+import type { IProduct } from '@/app/types';
 
 import './productPage.scss';
 
 export default async function ProductsPage() {
-  const products: product[] = await productsService.getproducts();
+  const products: IProduct[] = await productsService.getproducts();
 
   return (
     <UserContextProvider>

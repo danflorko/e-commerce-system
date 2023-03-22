@@ -1,4 +1,4 @@
-import { product } from "@/app/types";
+import { IProduct } from "@/app/types";
 
 export const productsService = {
   getproducts: async () => {
@@ -11,6 +11,6 @@ export const productsService = {
       throw new Error('Can not load the products')
     }
 
-    return products as product[];
+    return products as IProduct[];
   }
 }
