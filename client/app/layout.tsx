@@ -1,10 +1,12 @@
-import Sidebar from './components/Sidebar/sidebar';
+import React, { Suspense } from 'react';
 import { config } from "@fortawesome/fontawesome-svg-core";
-import React from 'react';
+
+import Sidebar from './components/Sidebar/sidebar';
+import Providers from './provider';
+import Loading from './loading';
 
 import './globals.css'
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { Providers } from './provider';
 
 config.autoAddCss = false;
 
@@ -20,19 +22,25 @@ export const metadata = {
   alternates: {},
 }
 
-export default function RootLayout({
+
+async function RootLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <Sidebar />
-          {children}
-        </Providers>
+        <Suspense fallback={<Loading />}>
+          <Providers>
+            <Sidebar />
+            {children}
+          </Providers>
+        </Suspense>
       </body>
     </html>
   )
 }
+
+export default RootLayout

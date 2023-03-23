@@ -4,17 +4,20 @@ import { useContext } from 'react';
 import type { FC } from 'react';
 
 import { SortType } from '@/app/types/enums';
+import { useAppSelector } from '@/app/shared/store';
 import { ProductsContext } from '@/app/utils/context/context';
 import { Dropdown } from '../Dropdowns';
 import type { IProduct } from '@/app/types';
 
 import './SorterList.scss';
 
+
 interface SorterListProps {
-  products: IProduct[];
+  products?: IProduct[];
 }
 
-const SorterList: FC<SorterListProps> = ({ products }) => {
+const SorterList: FC<SorterListProps> = ({ }) => {
+  const { products } = useAppSelector(state => state.productsSaga)
   const { sortType, setSortType, color, setColor } = useContext(ProductsContext);
 
   const sorters = [

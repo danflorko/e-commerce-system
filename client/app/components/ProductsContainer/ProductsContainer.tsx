@@ -1,24 +1,26 @@
 'use client';
-import React from 'react';
-import { useState, useContext, startTransition, useEffect, useCallback } from 'react';
+import React, { useTransition } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 import type { FC } from 'react';
 
 import ProductItem from '../ProductItem/ProductItem';
-import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
-import { IProduct } from '@/app/types';
 import { Pagination } from '../Pagination';
+import { SortType } from '@/app/types/enums';
+import type { IProduct } from '@/app/types';
 
 import './products.scss';
 import '../../styles/utils/grid.scss';
 
 interface ProductsContainerProps {
-  products: IProduct[];
+  products: IProduct[]
+  isLoading: boolean
 }
 
-const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
+const ProductsContainer: FC<ProductsContainerProps> = ({ products, isLoading }) => {
   const { sortType, color } = useContext(ProductsContext);
-  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>(products);
+  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>([]);
+  const [isPending, startTransition] = useTransition();
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
 
@@ -45,18 +47,15 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
   }, []);
 
   useEffect(() => {
-    setRenderingproducts(
-      products => [...products]?.filter(product => includesQuery(product.name))
-    );
-  }, [])
+    startTransition(() => {
+      setRenderingproducts(
+        products.filter(product => color === 'All' ? includesQuery(product.name) : includesQuery(product.name) && product.color == color)
+      )
+    })
+  }, [products, query, color])
 
   useEffect(() => {
     startTransition(() => {
-      if (products) {
-        setRenderingproducts(
-          products.filter(product => includesQuery(product.name) && color === 'All' ? products : product.color === color)
-        );
-      }
       switch (sortType) {
         case SortType.Cheapest:
           setRenderingproducts((prev) => [...prev.sort((a, b) => Number(a.price) - Number(b.price))]);
@@ -66,7 +65,7 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
           break;
       }
     })
-  }, [sortType, color, currentPage, query, products]);
+  }, [sortType, currentPage]);
 
   return (
     <>
