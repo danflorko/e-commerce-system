@@ -1,10 +1,8 @@
 import { IProduct } from "@/app/types";
 
 export const productsService = {
-  getproducts: async () => {
-    const { REACT_APP_HOSTNAME = 'localhost', REACT_APP_HOST_PORT = 8080 } = process.env;
-
-    const res = await fetch(`http://${REACT_APP_HOSTNAME}:${REACT_APP_HOST_PORT}/products`);
+  getProducts: async (host: string, port: number) => {
+    const res = await fetch(`http://${host}:${port}/products`);
     const products = await res.json();
 
     if (!products) {
