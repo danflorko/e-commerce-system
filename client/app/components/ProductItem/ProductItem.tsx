@@ -1,16 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useDrag } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import { incrementQuantity, addToCart } from '@/app/reducers/cart';
+import { useAppSelector } from '@/app/shared/store';
 import type { FC } from 'react';
 
+import AddToCartButton from '../AddToCartButton/AddToCartButton';
 import type { IProduct } from '@/app/types';
 
 import './ProductItem.scss';
-import AddToCartButton from '../AddToCartButton/AddToCartButton';
-import { useDrag } from 'react-dnd/dist/hooks';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/app/shared/store';
-import { addToCart, incrementQuantity } from '@/app/reducers/cart';
 
 interface ProductItemProps {
   product: IProduct;
@@ -31,7 +31,7 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   const { cart } = useAppSelector((state) => state.cart)
 
-  const [{}, drag ] = useDrag(() => ({
+  const [{ }, drag] = useDrag(() => ({
     type: 'product',
     item: { id },
     end: (item, monitor) => {
@@ -53,7 +53,10 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
   }))
 
   return (
-    <div ref={drag} className="card">
+    <div
+      ref={drag}
+      className="card"
+    >
       <Image
         src={image}
         alt={name}
@@ -97,7 +100,7 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
         />
       </div>
     </div>
-  );;
+  );
 }
 
 export default ProductItem;

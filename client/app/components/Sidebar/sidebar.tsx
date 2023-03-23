@@ -1,14 +1,17 @@
 'use client';
 
-import type { FC } from 'react';
 import Link from 'next/link';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { navigationLinks } from '@/app/utils/constants';
+import { useAppSelector } from '@/app/shared/store';
+import { useDrop } from 'react-dnd';
+import type { FC } from 'react';
 
 import './sidebar.scss'
 import classNames from 'classnames';
-import { useAppSelector } from '@/app/shared/store';
+import { CartProductList } from '../CartProductList';
 interface SidebarProps {
 
 }
@@ -16,13 +19,29 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = () => {
   const { cart } = useAppSelector((state) => state.cart);
 
+  const [{ item, isOver }, drop] = useDrop(() => ({
+    accept: 'product',
+    drop: () => ({ name: 'Cart' }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+      item: monitor.getItemType()
+    })
+  }))
+
   const counterProducts = cart.reduce(
     (acumulator, product) => +acumulator + +product.quantity,
     0,
   );
 
   return (
-    <nav className="nav">
+    <nav ref={drop} className={classNames("nav", { 'drop-container': !!item })}>
+      <div className='cart-page__product-list'>
+        <CartProductList />
+        <div className={classNames(['product-item', 'new'], { 'overed': isOver })}>
+          <span>DROP PRODUCT</span>
+        </div>
+      </div>
       <ul>
         <li>
           <Link href="/" className="logo">

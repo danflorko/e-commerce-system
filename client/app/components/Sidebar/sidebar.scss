@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
 @import '../../styles/utils/vars.scss';
 
+.nav,
+.nav>* {
+  z-index: 10000;
+}
+
 .nav {
   position: fixed;
   top: 0;
@@ -12,11 +17,70 @@
   overflow: hidden;
   transition: width 0.2s linear;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    width: 275px;
+    transition: all 0.5s ease;
+  }
+
+  .cart-page__product-list {
+    display: none;
+  }
 }
 
-.nav,
-.nav>* {
-  z-index: 10000;
+.drop-container {
+  width: 20vw;
+
+  &:hover {
+    width: 20vw;
+  }
+
+  ul {
+    display: none;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .cart-page__product-list {
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    &>* {
+      width: 90%
+    }
+
+    .product-item {
+      display: none;
+    }
+
+    .product-item:not(.new):nth-child(-n+3) {
+      background-color: $elements;
+      display: flex;
+    }
+
+    .new {
+      height: 250px;
+      background-color: $white;
+      border: 8px dashed $elements;
+      color: $elements;
+      font-size: 3.5rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+    }
+
+    .overed {
+      border: 8px dashed $icons;
+      color: $icons;
+    }
+  }
 }
 
 .logo {
@@ -52,11 +116,6 @@ a {
 
 a:hover {
   background: #eee;
-}
-
-nav:hover {
-  width: 275px;
-  transition: all 0.5s ease;
 }
 
 .logout {
