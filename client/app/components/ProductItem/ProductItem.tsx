@@ -31,22 +31,23 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   const { cart } = useAppSelector((state) => state.cart)
 
-  const [{ }, drag] = useDrag(() => ({
-    type: 'product',
-    item: { id },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        if (cart.find(product => product.id === id)) {
+  const [{ }, drag] = useDrag(() => ({ // implement dragging functionality with dragged element ref
+    type: 'product', // type of dragged element
+    item: { id }, // key of dragged element
+    end: (item, monitor) => { // dragging finish handler
+      const dropResult = monitor.getDropResult(); // get result of dropping
+
+      if (item && dropResult) { // if drop succeed
+        if (cart.find(product => product.id === id)) { // if item in cart increment item in cart quantity
           dispatch(incrementQuantity(id))
-        } else {
+        } else { // otherwise add item to cart
           dispatch(addToCart({
             id, name, image, price
           }))
         }
       }
     },
-    collect: (monitor) => ({
+    collect: (monitor) => ({ // dragging state handler
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId(),
     }),

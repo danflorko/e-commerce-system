@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { Minus } from '../../icons/Minus';
@@ -17,24 +17,22 @@ type Props = {
 };
 
 export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
-  const { cart } = useAppSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const {
     image, name, price, id, quantity = 0
   } = productInfo;
 
-  const counter = cart.filter((product) => product.id === id).length;
+  // define the increasing item quantity handler function
+  const handlerIncreaseCounter = useCallback(() => dispatch(incrementQuantity(id)), [id, incrementQuantity]);
 
-  const handlerIncreaseCounter = () => dispatch(incrementQuantity(id));
+  // define the decreasing item quantity handler function
+  const handlerDicreaseCounter = useCallback(() => dispatch(decrementQuantity(id)), [id, decrementQuantity]);
 
-  const handlerDicreaseCounter = () => dispatch(decrementQuantity(id));
-
-  const handleRemove = () => {
+  // define the removing item from the cart handler function
+  const handleRemove = useCallback(() => {
     dispatch(removeItem(id));
-  };
-
-  const totalPrice = price * (quantity || 1);
+  }, [id, removeItem]);
 
   return (
     <div className="product-item">
@@ -70,7 +68,7 @@ export const CartProductItem: React.FC<Props> = ({ productInfo }) => {
             </button>
           </div>
           <div>
-            <div className="product-item__price">{`$${totalPrice}`}</div>
+            <div className="product-item__price">{`$${price * (quantity || 1)}`}</div>
             <button
               type="button"
               className="product-item__cross"

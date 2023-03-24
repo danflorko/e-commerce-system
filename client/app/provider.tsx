@@ -13,10 +13,15 @@ type ProvidersProps = {
   children: React.ReactNode,
 }
 
+// define the Providers React component wrapper for Redux Store and Drag'n'Drop
 const Providers: FC<ProvidersProps> = ({ children }) => {
+  // initial saga dispatch
   store.dispatch(store.dispatch({ type: "GET_PRODUCTS" }));
-  store.dispatch(END);
+  store.dispatch(END); // stop saga on server (for start it on client)
 
+  // HydrationProvider is avoiding the serverside dnd and redux-saga problems
+  // DndProvider add an ability to use drag and drop functionality
+  // react-redux Provider component connect store to whole application
   return (
     <>
       <HydrationProvider>

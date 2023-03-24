@@ -3,6 +3,7 @@ import ContentLoader from 'react-content-loader';
 
 import './loading.scss';
 
+// define the Next.js skeleton like loader for making visible the loading proccess
 const Loading: FC = () => {
     return (
         <ContentLoader

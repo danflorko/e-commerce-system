@@ -2,40 +2,46 @@
 import { removeAllItems } from '@/app/reducers/cart';
 import { useAppSelector } from '@/app/shared/store';
 
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './CartCheckout.scss';
 
 const CartCheckout: FC = () => {
   const dispatch = useDispatch();
   const { cart } = useAppSelector((state) => state.cart)
-  const [isClicked, setIsClicked] = useState(false);
 
+  const [_, setIsClicked] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault();
+  // define the cart checkout handler function
+  const handleCheckout = useCallback((event: React.MouseEvent) => {
+    event.preventDefault(); // prevent the default element's onClick behavior
 
-    setIsClicked(!isClicked);
+    setIsClicked(prev => !prev);
 
-    if (!isCompleted) {
-      dispatch(removeAllItems());
-      setIsCompleted(true);
+    if (!isCompleted) { // if checkout isn't complete
+      dispatch(removeAllItems()); // clear cart
+      setIsCompleted(true); // sign checkout is completed
     }
-  };
+  }, [isCompleted, removeAllItems, setIsCompleted]);
 
-  const handleClear = () => {
+  // define the cart fully clear handler function
+  const handleClear = useCallback(() => {
     dispatch(removeAllItems());
-  };
+  }, [removeAllItems]);
 
+  // calculate the total items number
   const counterProducts = cart.reduce(
     (acumulator, product) => +acumulator + +product.quantity,
     0,
   );
+
+  // calculate the total items price
   const totalPrice = cart.reduce(
     (acumulator, product) => +acumulator + +product.price * +product.quantity,
     0,
   );
+
   return (
     <>
       <div className="cart-page__line" />
@@ -43,7 +49,7 @@ const CartCheckout: FC = () => {
         <button
           type="button"
           className="cart-page__clear-button"
-          onClick={handleClick}
+          onClick={handleCheckout}
           disabled={!counterProducts}
         >
           Clear All

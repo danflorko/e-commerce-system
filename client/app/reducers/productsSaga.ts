@@ -12,6 +12,7 @@ export interface ISagaProductsStore {
   errorMessage: string
 }
 
+// define the initial state of the Saga products state
 export const INITIAL_STATE: ISagaProductsStore = {
   productsLoading: false,
   productsLoaded: false,
@@ -20,12 +21,14 @@ export const INITIAL_STATE: ISagaProductsStore = {
   errorMessage: ""
 };
 
+// define the entry reducer function for getting products from the server
 export const productsRequest = (state = INITIAL_STATE): ISagaProductsStore => ({
   ...state,
   productsLoading: true,
   productsLoaded: false
 });
 
+// define the reducer function that will call in the succeed data request case
 export const productsSuccess = (state = INITIAL_STATE, action: PayloadAction<IProduct[]>): ISagaProductsStore => ({
   ...state,
   productsLoading: false,
@@ -34,6 +37,7 @@ export const productsSuccess = (state = INITIAL_STATE, action: PayloadAction<IPr
   error: false
 });
 
+// define the reducer function that will call in the failed data request case
 export const productsFailure = (state = INITIAL_STATE, action: PayloadAction<string>): ISagaProductsStore => ({
   ...state,
   productsLoading: false,
@@ -43,11 +47,7 @@ export const productsFailure = (state = INITIAL_STATE, action: PayloadAction<str
   errorMessage: action.errorMessage
 });
 
-export const productsHydrate = (state = INITIAL_STATE, action: PayloadAction<ISagaProductsStore>): ISagaProductsStore => ({
-  ...state,
-  ...action.payload
-});
-
+// define the main reducer function using reduxsauce createReducer, which takes an object that maps action types to reducer functions
 export const reducer = createReducer<ISagaProductsStore, PayloadAction<ActionType>>(INITIAL_STATE, {
   [Types.PRODUCTS_REQUEST]: productsRequest,
   [Types.PRODUCTS_SUCCESS]: productsSuccess,

@@ -17,15 +17,17 @@ interface ProductsContainerProps {
   isLoading: boolean
 }
 
-const ProductsContainer: FC<ProductsContainerProps> = ({ products, isLoading }) => {
-  const { sortType, color } = useContext(ProductsContext);
-  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>([]);
-  const [isPending, startTransition] = useTransition();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [query, setQuery] = useState('');
+const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
+  const { sortType, color } = useContext(ProductsContext); // sorting and filter values
+  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>([]); // state with controlled data
+  const [_, startTransition] = useTransition(); // react 18 feature for avoiding blocking the UI thread while updating
+  const [currentPage, setCurrentPage] = useState(1); // pagination controller state
+  const [query, setQuery] = useState(''); // searching controller
 
+  // define the function checks includes a text query, case-insensitive
   const includesQuery = useCallback((text: string) => text.toLowerCase().includes(query?.toLowerCase()), [query]);
 
+  // define the search handler function
   const handleChange = useCallback((event: { target: { value: any; }; }) => {
     const { value } = event.target;
 
@@ -34,18 +36,21 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products, isLoading }) 
     })
   }, []);
 
+  // define the changing current page handler function
   const handleCurPage = useCallback((numberOfPage: number) => {
     setCurrentPage(numberOfPage);
   }, []);
 
+  // define the go to previous page handler
   const handlePrevPage = useCallback(() => {
-    setCurrentPage(page => page === 1 ? page : page - 1)
+    setCurrentPage(page => page - Number(page !== 1))
   }, []);
 
   const handleNextPage = useCallback((lastPage: number) => {
-    setCurrentPage(page => page === lastPage ? page : page + 1)
+    setCurrentPage(page => page + Number(page !== lastPage))
   }, []);
 
+  // updating the renderingproduct by the searching, filter by color, and products props changing
   useEffect(() => {
     startTransition(() => {
       setRenderingproducts(
@@ -54,6 +59,7 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products, isLoading }) 
     })
   }, [products, query, color])
 
+  // updating the renderingproduct by the pagination and sorting changing
   useEffect(() => {
     startTransition(() => {
       switch (sortType) {

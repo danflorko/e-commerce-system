@@ -19,16 +19,17 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = () => {
   const { cart } = useAppSelector((state) => state.cart);
 
-  const [{ item, isOver }, drop] = useDrop(() => ({
-    accept: 'product',
-    drop: () => ({ name: 'Cart' }),
+  const [{ item, isOver }, drop] = useDrop(() => ({ // implement dropping functionality
+    accept: 'product', // type of accepted to dropping dragging element
+    drop: () => ({ name: 'Cart' }), // calling when valid element is dropped 
     collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-      item: monitor.getItemType()
+      isOver: monitor.isOver(), // is dragging element currently being dragged over the component
+      canDrop: monitor.canDrop(), // is dragging element can currently accept a drop
+      item: monitor.getItemType() // the type property of dragging element
     })
   }))
 
+  // calculates the total number of products in the cart
   const counterProducts = cart.reduce(
     (acumulator, product) => +acumulator + +product.quantity,
     0,

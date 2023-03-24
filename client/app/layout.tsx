@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 config.autoAddCss = false;
 
+// define the metadata object for write it in head element
 export const metadata = {
   title: 'Ecommerce test UI',
   description: 'Next 13 application created by Daniil Florko personally for Intetics.',
@@ -22,7 +23,7 @@ export const metadata = {
   alternates: {},
 }
 
-
+// define the main layout component that wrap the whole application
 async function RootLayout({
   children
 }: {
