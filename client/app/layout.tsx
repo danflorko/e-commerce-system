@@ -13,7 +13,7 @@ config.autoAddCss = false;
 // define the metadata object for write it in head element
 export const metadata = {
   title: 'Ecommerce test UI',
-  description: 'Next 13 application created by Daniil Florko personally for Intetics.',
+  description: 'Next 13 application created by Daniil Florko personally for KITGLOBAL.',
   generator: 'Next.js',
   applicationName: 'Ecommerce test UI',
   referrer: 'origin-when-cross-origin',

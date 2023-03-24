@@ -1,4 +1,4 @@
-This is a test e-commerce application with a frontend based on [Next.js](https://nextjs.org/) bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and with a backend as the mocked server provided by [json-server](https://github.com/typicode/json-server) and [faker.js](https://github.com/faker-js/faker). 
+This is a test e-commerce application with a frontend based on [Next.js](https://nextjs.org/) bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and with a backend as the mocked server provided by [json-server](https://github.com/typicode/json-server) and [faker.js](https://github.com/faker-js/faker). Specially for KITGLOBAL.
 
 The application is also containerized by [Docker](https://github.com/docker).
 
