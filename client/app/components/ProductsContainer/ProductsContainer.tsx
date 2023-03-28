@@ -1,26 +1,33 @@
 'use client';
-import React from 'react';
-import { useState, useContext, startTransition, useEffect, useCallback } from 'react';
+import React, { useTransition } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 import type { FC } from 'react';
 
 import ProductItem from '../ProductItem/ProductItem';
-import { SortType } from '@/app/types/enums';
 import { ProductsContext } from '@/app/utils/context/context';
-import { product } from '@/app/types';
 import { Pagination } from '../Pagination';
+import { SortType } from '@/app/types/enums';
+import type { IProduct } from '@/app/types';
+
+import './products.scss';
+import '../../styles/utils/grid.scss';
 
 interface ProductsContainerProps {
-  products: product[];
+  products: IProduct[]
+  isLoading: boolean
 }
 
 const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
-  const { sortType, color } = useContext(ProductsContext);
-  const [renderingproducts, setRenderingproducts] = useState<product[]>(products);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [query, setQuery] = useState('');
+  const { sortType, color } = useContext(ProductsContext); // sorting and filter values
+  const [renderingproducts, setRenderingproducts] = useState<IProduct[]>([]); // state with controlled data
+  const [_, startTransition] = useTransition(); // react 18 feature for avoiding blocking the UI thread while updating
+  const [currentPage, setCurrentPage] = useState(1); // pagination controller state
+  const [query, setQuery] = useState(''); // searching controller
 
+  // define the function checks includes a text query, case-insensitive
   const includesQuery = useCallback((text: string) => text.toLowerCase().includes(query?.toLowerCase()), [query]);
 
+  // define the search handler function
   const handleChange = useCallback((event: { target: { value: any; }; }) => {
     const { value } = event.target;
 
@@ -29,31 +36,32 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
     })
   }, []);
 
+  // define the changing current page handler function
   const handleCurPage = useCallback((numberOfPage: number) => {
     setCurrentPage(numberOfPage);
   }, []);
 
+  // define the go to previous page handler
   const handlePrevPage = useCallback(() => {
-    setCurrentPage(page => page === 1 ? page : page - 1)
+    setCurrentPage(page => page - Number(page !== 1))
   }, []);
 
   const handleNextPage = useCallback((lastPage: number) => {
-    setCurrentPage(page => page === lastPage ? page : page + 1)
+    setCurrentPage(page => page + Number(page !== lastPage))
   }, []);
 
-  useEffect(() => {
-    setRenderingproducts(
-      products => [...products]?.filter(product => includesQuery(product.name))
-    );
-  }, [])
-
+  // updating the renderingproduct by the searching, filter by color, and products props changing
   useEffect(() => {
     startTransition(() => {
-      if (products) {
-        setRenderingproducts(
-          products.filter(product => includesQuery(product.name) && color === 'All' ? products : product.color === color)
-        );
-      }
+      setRenderingproducts(
+        products.filter(product => color === 'All' ? includesQuery(product.name) : includesQuery(product.name) && product.color == color)
+      )
+    })
+  }, [products, query, color])
+
+  // updating the renderingproduct by the pagination and sorting changing
+  useEffect(() => {
+    startTransition(() => {
       switch (sortType) {
         case SortType.Cheapest:
           setRenderingproducts((prev) => [...prev.sort((a, b) => Number(a.price) - Number(b.price))]);
@@ -63,7 +71,7 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
           break;
       }
     })
-  }, [sortType, color, currentPage, query, products]);
+  }, [sortType, currentPage]);
 
   return (
     <>
@@ -94,6 +102,6 @@ const ProductsContainer: FC<ProductsContainerProps> = ({ products }) => {
     </>
 
   );
-}
+};
 
 export default ProductsContainer;

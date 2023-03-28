@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import './Dropdowns.scss';
 import classNames from 'classnames';
+
+import './Dropdowns.scss';
 
 interface Props {
   title: string;

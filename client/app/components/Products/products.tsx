@@ -1,16 +1,17 @@
+'use client';
+import { Suspense } from 'react';
 import ProductsContainer from '../ProductsContainer/ProductsContainer';
+import Loading from '@/app/loading';
+import { useAppSelector } from '@/app/shared/store';
 import type { FC } from 'react';
-import type { product } from '@/app/types';
 
-import './products.scss';
-import '../../styles/utils/grid.scss';
+const ProductsPage: FC = ({ }) => {
+  const { products, productsLoading } = useAppSelector(state => state.productsSaga)
+  return (
+    <Suspense fallback={<Loading />}>
+      <ProductsContainer products={products} isLoading={productsLoading} />
+    </Suspense>
+  )
+};
 
-interface ProductsPageProps {
-  products: product[];
-}
-
-const ProductsPage: FC<ProductsPageProps> = ({ products }) => (
-  <ProductsContainer products={products} />
-);
-
-export default ProductsPage
+export default ProductsPage;
